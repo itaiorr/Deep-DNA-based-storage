@@ -1,4 +1,4 @@
-#Deep DNA Storage: Scalable and Robust DNA-based Storage via Coding Theory and Deep Learning**
+# Deep DNA Storage: Scalable and Robust DNA-based Storage via Coding Theory and Deep Learning 
 
 
 This repository includes the methods that were used in the work. 
@@ -6,9 +6,9 @@ This repository includes the methods that were used in the work.
 ![Example Image](pipeline_(fig1).png)
 
 
-####Link to our datasets: [Should complete link here](google.com). 
+### Link to our datasets: [Should complete link here](google.com). 
 
-###The repository includes the following folders. 
+## The repository includes the following folders. 
 
 1. CPL - Implementation of the CPL algorithm.
 2. DNN - Implementation of the DNN. 
@@ -16,7 +16,7 @@ This repository includes the methods that were used in the work.
 4. Encoder_Decoder - Implemenation of our encoding and decoding algorithms.  
 5. Data Utilities - Scripts that are used to parse and read our data.  
 
-##CPL algorithm
+## CPL algorithm
 ![cpl_pic](cpl.png)
 The CPL algorithm is implemented in c++. 
 Installation of the g++ compiler is required (see link: https://gcc.gnu.org/). 
