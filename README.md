@@ -92,3 +92,4 @@ python3 decode.py
 The matrix H that was used throughout our encoding process can be found in H_matrix_identity.py.
 
 The Reed Solomon implementation was done using the schifra library [link](https://www.schifra.com/)
+Part of the encoder-decoder was implemented by Dvir Ben-Shabat.
