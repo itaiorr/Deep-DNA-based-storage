@@ -1,0 +1,39 @@
+CXX = g++-7
+CFLAGS = -ansi -pedantic-errors -Wall -Wextra -Wno-long-long -O3 -o   -std=c++17 -lm
+RM = rm
+
+# ****************************************************
+
+
+c1_dvir: $(CXX) $CFLAGS C2_encoding.cpp -o c2_dvir 
+
+# ****************************************************
+
+DNA.o: DNA.cpp
+	$(CXX) $(CFLAGS) -c DNA.cpp
+
+LCS2.o: LCS2.cpp
+	$(CXX) $(CFLAGS) -c LCS2.cpp
+
+EditDistance.o: EditDistance.cpp
+	$(CXX) $(CFLAGS) -c EditDistance.cpp
+
+Clone.o: Clone.cpp
+	$(CXX) $(CFLAGS) -c Clone.cpp
+
+Cluster2.o: Cluster2.cpp
+	$(CXX) $(CFLAGS) -c Cluster2.cpp
+
+LongestPath.o: LongestPath.cpp
+	$(CXX) $(CFLAGS) -c LongestPath.cpp
+
+CommonSubstring2.o: CommonSubstring2.cpp
+	$(CXX) $(CFLAGS) -c CommonSubstring2.cpp
+
+DividerBMA.o: DividerBMA.cpp
+	$(CXX) $(CFLAGS) -c DividerBMA.cpp
+
+
+clean:
+	$(RM) *.o
+
