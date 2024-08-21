@@ -14,7 +14,37 @@ This repository includes the methods that were used in the work.
 2. DNN - Implementation of the DNN. 
 3. data_generator - Implementation of the simulated data generator that was used to train the DNN. 
 4. Encoder_Decoder - Implemenation of our encoding and decoding algorithms.  
-5. Data Utilities - Scripts that are used to parse and read our data.  
+5. Data Utilities - Scripts that are used to parse and read our data.
+
+## Full End-to-End Retrieval Pipeline
+
+To run the end-to-end retrieval pipeline, please use the script 
+Deep_decoding_pipeline.py  that can be found in the folder DeepDNA-EndocderDecoder_Git/ 
+Please make sure to install the required python packages and to follow the instruction below. 
+
+```bash
+python3 DeepDNA-EndocderDecoder_Git/deep_decoding_pipeline.py
+```
+
+The full decoding pipeline includes the following components: 
+1. Preprocessing of the reads—This includes primer trimming and preprocessing of the reads obtained from sequencing. 
+This step trims unnecessary parts of the primers from the reads before passing them through the decoding pipeline. 
+2. Binning algorithm - run on the reads to create the clusters.
+This step bins the obtained reads based on the indices, and the binned reads are later used as inputs the DNAformer. 
+3. DNAformer - this step includes creating the inference of the DNAformer, including the margin safety mechanism. 
+In this step DNAformer is used to estimate the encoded sequences from the obtained reads. 
+4. Decoding of the information. 
+This step is used to decode the information from the DNN inference. 
+
+Please compile the CPL algorithm (see instructions below) and to install the required packages. 
+
+
+Full encoding pipeline is given in the script encode.py in Encoder_Decoder folder (as described below). 
+```bash
+python3 encode.py
+```
+
+
 
 ## CPL algorithm
 ![cpl_pic](cpl.png)
