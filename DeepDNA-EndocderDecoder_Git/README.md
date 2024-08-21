@@ -16,6 +16,24 @@ This repository includes the methods that were used in the work.
 4. Encoder_Decoder - Implemenation of our encoding and decoding algorithms.  
 5. Data Utilities - Scripts that are used to parse and read our data.  
 
+## Full End-to-End Retrieval Pipeline
+
+To run the full end-to-end retrieval pipeline please use the script 
+Deep_decoding_pipeline.py that can be found in Encoder_Decoder folder. 
+The full decoding pipeline includes the following components: 
+1. Preprocessing of the reads - this includes primer trimming and preprocessing of the reads that are obtained from sequencing. 
+This step is used to trim the unnecasrry part of the primers from the reads before passing it thru the decoding pipeline. 
+2. Binning algorithm - run on the reads to create the clusters.
+This step bins the obtained reads based on the indices and the binned reads are later used as input to the DNAformer. 
+3. DNAformer - this step includes creating the inference of the DNAformer, including the margin safety mechanism. 
+In this step DNAformer is used to estimate the encoded sequences from the obtained reads. 
+4. Decoding of the information. 
+This step is used to decode the information from the DNN inference. 
+
+Please make sure to compile the CPL algorithm (see instructions given below on this page).
+
+Full encoding pipeline is given in the script encode.py in Encoder_Decoder folder. 
+
 ##CPL algorithm
 ![cpl_pic](cpl.png)
 The CPL algorithm is implemented in c++. 
