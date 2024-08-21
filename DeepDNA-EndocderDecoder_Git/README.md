@@ -18,25 +18,35 @@ This repository includes the methods that were used in the work.
 
 ## Full End-to-End Retrieval Pipeline
 
-To run the full end-to-end retrieval pipeline please use the script 
-Deep_decoding_pipeline.py that can be found in Encoder_Decoder folder. 
+To run the entire end-to-end retrieval pipeline please use the script 
+Deep_decoding_pipeline.py  
+```bash
+python3 deep_decoding_pipeline.py
+```
+
 The full decoding pipeline includes the following components: 
-1. Preprocessing of the reads - this includes primer trimming and preprocessing of the reads that are obtained from sequencing. 
-This step is used to trim the unnecasrry part of the primers from the reads before passing it thru the decoding pipeline. 
+1. Preprocessing of the reads—This includes primer trimming and preprocessing of the reads obtained from sequencing. 
+This step trims unnecessary parts of the primers from the reads before passing them through the decoding pipeline. 
 2. Binning algorithm - run on the reads to create the clusters.
-This step bins the obtained reads based on the indices and the binned reads are later used as input to the DNAformer. 
+This step bins the obtained reads based on the indices, and the binned reads are later used as inputs the DNAformer. 
 3. DNAformer - this step includes creating the inference of the DNAformer, including the margin safety mechanism. 
 In this step DNAformer is used to estimate the encoded sequences from the obtained reads. 
 4. Decoding of the information. 
 This step is used to decode the information from the DNN inference. 
 
-Please make sure to compile the CPL algorithm (see instructions given below on this page).
+Please compile the CPL algorithm (see instructions below) and to install the required packages. 
+
+
+
 
 Full encoding pipeline is given in the script encode.py in Encoder_Decoder folder. 
+```bash
+python3 encode.py
+```
 
 ##CPL algorithm
 ![cpl_pic](cpl.png)
-The CPL algorithm is implemented in c++. 
+The CPL algorithm is implemented in c++ and can be found in the folder CPL_Deep.
 Installation of the g++ compiler is required (see link: https://gcc.gnu.org/). 
 
 
@@ -87,7 +97,8 @@ pickle
 tqdm 
 json
 os
-
+multi_threaded_preprocessor
+concurrent.futures
 ```
 
 ### Usage
