@@ -987,7 +987,7 @@ def main_decoder(erasure_fraction=0.04, substitution_fraction=0.0075, almost_cor
     ## the syndrome table can be download from here this link, https://www.dropbox.com/s/rml0dbnvhl5kwet/syndromes_dict_identity.pkl?dl=0
     ## another link : https://drive.google.com/file/d/1QgJRKgvm8T2MHrwDhyYFveK0CMIY3C-J/view?usp=sharing
     ## then this path should be replaced.
-    syndrom_table_pkl_path = "/Users/omersabary/Dropbox/for_omer/syndromes_dict_identity.pkl"
+    syndrom_table_pkl_path = "./syndromes_dict_identity.pkl"
 
     if conf_mode == "DNN+Conf+CPL":
         #confidence parameter
