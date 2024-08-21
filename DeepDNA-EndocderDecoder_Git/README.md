@@ -35,6 +35,9 @@ In this step DNAformer is used to estimate the encoded sequences from the obtain
 This step is used to decode the information from the DNN inference. 
 
 Please compile the CPL algorithm (see instructions below) and to install the required packages. 
+Our decoder is based on syndrome decoding, so please make sure to download the syndrome dictionary from the link below and place it in the same script folder (the dictionary is too large to be uploaded to git). 
+Link for the syndrome dictionary: [link](https://drive.google.com/file/d/1QgJRKgvm8T2MHrwDhyYFveK0CMIY3C-J/view?usp=sharing)
+
 
 
 
