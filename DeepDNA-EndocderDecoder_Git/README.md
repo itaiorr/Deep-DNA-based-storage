@@ -1,4 +1,4 @@
-#Deep DNA Storage: Scalable and Robust DNA-based Storage via Coding Theory and Deep Learning**
+# Deep DNA Storage: Scalable and Robust DNA-based Storage via Coding Theory and Deep Learning**
 
 
 This repository includes the methods that were used in the work. 
@@ -6,9 +6,9 @@ This repository includes the methods that were used in the work.
 ![Example Image](pipeline_(fig1).png)
 
 
-####Link to our datasets: [Should complete link here](google.com). 
+#### Link to our datasets: [Should complete link here](google.com). 
 
-###The repository includes the following folders. 
+### The repository includes the following folders. 
 
 1. CPL - Implementation of the CPL algorithm.
 2. DNN - Implementation of the DNN. 
@@ -57,7 +57,7 @@ Schwarz, Michael and Welzel, Marius and Kabdullayeva, Tolganay and Becker, Anke 
 DeepSimulator: 
 Li, Yu and Han, Renmin and Bi, Chongwei and Li, Mo and Wang, Sheng and Gao, Xin, “DeepSimulator: a deep simulator for Nanopore sequencing,” Bioinformatics, vol. 34, no. 17, pp. 2899–2908, 2018. LINK: https://github.com/liyu95/DeepSimulator[https://github.com/liyu95/DeepSimulator].
 
-##CPL algorithm
+## CPL algorithm
 ![cpl_pic](cpl.png)
 The CPL algorithm is implemented in c++ and can be found in the folder CPL_Deep.
 Installation of the g++ compiler is required (see link: https://gcc.gnu.org/). 
