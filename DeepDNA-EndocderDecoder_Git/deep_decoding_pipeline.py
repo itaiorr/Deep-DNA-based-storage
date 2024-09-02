@@ -5,9 +5,10 @@ from decoder_pipeline import main_decoder
 # this parameter presents the lib length of 140
 lib_length = 140
 
-# path to the sequencing output - can be .txt or a .fastq file
+# path to the sequencing output - can be .txt or a .fastq file or a path to a folder with many .fastq files
 # this is the file the includes all the basecalled reads that we want to processed
 reads_path = "/Users/omersabary/Documents/dataNanopore-pilotSep11/full_omer_alex_hadas/pass/seq.txt"
+reads_path = "fastq_runid_f9875c0bb5171f8bae2f76aa5d9ac39431889861_1221_0.fastq"
 
 # path (including file name) in which the trimmed reads will be stored
 reads_trimmed_path="./reads_trimmed.txt"

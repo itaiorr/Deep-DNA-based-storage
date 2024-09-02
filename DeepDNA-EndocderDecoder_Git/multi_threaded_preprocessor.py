@@ -85,24 +85,50 @@ def process_line(line, front_primer, back_primer, lib_length):
     return None
 
 def read_preprocessor(file_input_path='./Calls.fastq', preprocessed_reads_path='./reads_processed.fastq', lib_length=140):
-    file_input_fastq = open(file_input_path, "r")
     file_output_without_primers = open(preprocessed_reads_path, "w")
-
     front_primer = "TAAGAGACAG"
     back_primer = "CTGTCTCTTA"
 
-    lines = file_input_fastq.readlines()[1::4]
+    if os.path.isfile(file_input_path):
+        print(f"The path '{file_input_path}' is a file.")
+        file_input_fastq = open(file_input_path, "r")
+        lines = file_input_fastq.readlines()[1::4]
 
-    with ThreadPoolExecutor() as executor:
-        results = list(tqdm(executor.map(process_line, lines, [front_primer]*len(lines),
-                                         [back_primer]*len(lines), [lib_length]*len(lines)),
-                            total=len(lines), desc="Processing reads"))
+        with ThreadPoolExecutor() as executor:
+            results = list(tqdm(executor.map(process_line, lines, [front_primer] * len(lines),
+                                             [back_primer] * len(lines), [lib_length] * len(lines)),
+                                total=len(lines), desc="Processing reads"))
 
-    for result in results:
-        if result is not None:
-            file_output_without_primers.write(result + "\n")
+        for result in results:
+            if result is not None:
+                file_output_without_primers.write(result + "\n")
 
-    file_input_fastq.close()
+        file_input_fastq.close()
+        file_output_without_primers.close()
+
+    elif os.path.isdir(file_input_path):
+        print(f"The path '{file_input_path}' is a folder.")
+        for file_name in os.listdir(file_input_path):
+            if file_name.endswith(".fastq"):
+                file_path = os.path.join(file_input_path, file_name)
+                file_input_fastq = open(file_path, "r")
+                lines = file_input_fastq.readlines()[1::4]
+
+                with ThreadPoolExecutor() as executor:
+                    results = list(tqdm(executor.map(process_line, lines, [front_primer] * len(lines),
+                                                     [back_primer] * len(lines), [lib_length] * len(lines)),
+                                        total=len(lines), desc="Processing reads"))
+
+                for result in results:
+                    if result is not None:
+                        file_output_without_primers.write(result + "\n")
+
+                file_input_fastq.close()
+
+    else:
+        print(f"The path '{file_input_path}' is neither a file nor a folder, or it doesn't exist.")
+
+
     file_output_without_primers.close()
 
 # Running the script
