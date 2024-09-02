@@ -18,15 +18,18 @@ This repository includes the methods that were used in the work.
 
 ## Full End-to-End Retrieval Pipeline
 
-To run the entire end-to-end retrieval pipeline please use the script 
+To run the entire end-to-end retrieval pipeline, which is our main contribution, please use the script. 
+
 Deep_decoding_pipeline.py  
 ```bash
 python3 deep_decoding_pipeline.py
 ```
 
+A sample of a .fastq file with reads obtained from nanopore sequencing can be found in this repository. For the full dataset of reads please contact the authors. 
+
 The full decoding pipeline includes the following components: 
 1. Preprocessing of the reads—This includes primer trimming and preprocessing of the reads obtained from sequencing. 
-This step trims unnecessary parts of the primers from the reads before passing them through the decoding pipeline. 
+This step trims the unnecessary parts of the primers from the reads before passing them through the decoding pipeline. 
 2. Binning algorithm - run on the reads to create the clusters.
 This step bins the obtained reads based on the indices, and the binned reads are later used as inputs the DNAformer. 
 3. DNAformer - this step includes creating the inference of the DNAformer, including the margin safety mechanism. 
@@ -46,6 +49,13 @@ Full encoding pipeline is given in the script encode.py in Encoder_Decoder folde
 ```bash
 python3 encode.py
 ```
+
+Error simulation can be done with external tools, for example: 
+MESA simulator: 
+Schwarz, Michael and Welzel, Marius and Kabdullayeva, Tolganay and Becker, Anke and Freisleben, Bernd and Heider, Dominik, “MESA: automated assessment of synthetic DNA fragments and simulation of DNA synthesis, storage, sequencing and PCR errors,” Bioinformatics, vol. 36, no. 11, pp. 3322–3326, 2020. LINK: https://mesa.mosla.de/[https://mesa.mosla.de/] .
+
+DeepSimulator: 
+Li, Yu and Han, Renmin and Bi, Chongwei and Li, Mo and Wang, Sheng and Gao, Xin, “DeepSimulator: a deep simulator for Nanopore sequencing,” Bioinformatics, vol. 34, no. 17, pp. 2899–2908, 2018. LINK: https://github.com/liyu95/DeepSimulator[https://github.com/liyu95/DeepSimulator].
 
 ##CPL algorithm
 ![cpl_pic](cpl.png)
