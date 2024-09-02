@@ -44,7 +44,12 @@ Full encoding pipeline is given in the script encode.py in Encoder_Decoder folde
 python3 encode.py
 ```
 
+Error simulation can be done with external tools, for example: 
+MESA simulator: 
+Schwarz, Michael and Welzel, Marius and Kabdullayeva, Tolganay and Becker, Anke and Freisleben, Bernd and Heider, Dominik, “MESA: automated assessment of synthetic DNA fragments and simulation of DNA synthesis, storage, sequencing and PCR errors,” Bioinformatics, vol. 36, no. 11, pp. 3322–3326, 2020. LINK: https://mesa.mosla.de/[https://mesa.mosla.de/] .
 
+DeepSimulator: 
+Li, Yu and Han, Renmin and Bi, Chongwei and Li, Mo and Wang, Sheng and Gao, Xin, “DeepSimulator: a deep simulator for Nanopore sequencing,” Bioinformatics, vol. 34, no. 17, pp. 2899–2908, 2018. LINK: https://github.com/liyu95/DeepSimulator[https://github.com/liyu95/DeepSimulator].
 
 ## CPL algorithm
 ![cpl_pic](cpl.png)
