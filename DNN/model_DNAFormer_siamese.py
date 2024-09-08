@@ -57,8 +57,8 @@ class fusion_module(nn.Module):
         if config.filter_index:
             label_length -= config.index_length
         
-        self.pred_fusion_left  = nn.Parameter(torch.ones(label_length).cuda(config.gpus_list[0]))
-        self.pred_fusion_right = nn.Parameter(torch.ones(label_length).cuda(config.gpus_list[0]))
+        self.pred_fusion_left  = nn.Parameter(torch.ones(label_length).to(config.device))
+        self.pred_fusion_right = nn.Parameter(torch.ones(label_length).to(config.device))
         
         self.conv_1 = nn.Conv1d(config.output_ch, config.output_ch, 1)
         self.conv_2 = nn.Conv1d(config.output_ch, config.output_ch, 1)
@@ -123,10 +123,10 @@ class embedding_module(nn.Module):
         self.linear_block = linear_block(config, input_len=config.noisy_copies_length, output_len=self.label_length)
         
         if config.use_input_scaling:
-            self.input_scaling_1 = nn.Parameter(torch.ones(1).cuda(config.gpus_list[0]))
-            self.input_scaling_2 = nn.Parameter(torch.ones(1).cuda(config.gpus_list[0]))
+            self.input_scaling_1 = nn.Parameter(torch.ones(1).to(config.device))
+            self.input_scaling_2 = nn.Parameter(torch.ones(1).to(config.device))
                    
-    def forward(self, x, noisy_copy_length):      
+    def forward(self, x):
               
         # Sum over cluster dimension (non coherent integration)
         x = torch.sum(x,dim=1)
@@ -177,10 +177,10 @@ class net(nn.Module):
         self.config = config
         
         # Alignment
-        self.alignement = alignement_module(config, config.enc_filters, config.alignement_filters)
+        self.alignement = alignement_module(config, config.enc_filters, config.alignment_filters)
         
         # Embedding
-        self.embedding = embedding_module(config, config.alignement_filters, config.d_model)
+        self.embedding = embedding_module(config, config.alignment_filters, config.d_model)
         
         # Encoder
         encoder_layer = nn.TransformerEncoderLayer(d_model=config.d_model, dim_feedforward=config.dim_feedforward,nhead=config.n_head, activation=config.activation, dropout=config.p_dropout)

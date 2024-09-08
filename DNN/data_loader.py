@@ -1,4 +1,4 @@
-from imports import *
+from .imports import *
 
 ###########################################################################################
 # Define data loader
@@ -8,19 +8,23 @@ class DatasetFromFolder(data.Dataset):
         self.config      = config
         self.data_source = data_source
         self.filenames   = df
+        self.frame_path  = 'none'
 
     def __len__(self):
         return len(self.filenames)
    
     def __getitem__(self, idx):
-                    
-        if self.data_source=='load':
-                sample = read_data(self, idx)
+        try:
+            if self.data_source=='load':
+                    sample = read_data(self, idx)
 
-        elif self.data_source=='gen_sim':
-                sample = generate_data(self, idx)
+            elif self.data_source=='gen_sim':
+                    sample = generate_data(self, idx)
     
-        return sample
+            return sample
+        except Exception as e:
+            print(f"Error in worker {os.getpid()}: {e}")
+            raise e
 
 ###########################################################################################
 def get_random_seq(self):
@@ -100,7 +104,7 @@ def generate_data(self, idx):
     data['data'] = label
     
     # Get model input (one_hot encoding)
-    model_input, model_input_flip, noisy_copy_length, num_noisy_copies = grab_model_input(self, data)
+    model_input, model_input_right, noisy_copy_length, num_noisy_copies = grab_model_input(self, data)
     noisy_copy_length = torch.tensor(noisy_copy_length)
 
     # Torch label
@@ -122,7 +126,7 @@ def generate_data(self, idx):
              
     # Build sample
     sample = {'model_input':model_input,
-              'model_input_flip':model_input_flip,
+              'model_input_right':model_input_right,
               'noisy_copies':noisy_copies, 
               'num_noisy_copies':num_noisy_copies,
               'noisy_copy_length':noisy_copy_length,
@@ -182,7 +186,7 @@ def read_data(self, idx):
 
         # Shuffle reads
         random.shuffle(data['noisy_copies'], random.random)
-          
+
         # Filter data
         data, false_cluster, small_cluster, bad_label = filter_data(self, data)
         
@@ -191,7 +195,7 @@ def read_data(self, idx):
             continue
             
         # Get model input (one_hot encoding)
-        model_input, model_input_flip, noisy_copy_length, num_noisy_copies = grab_model_input(self, data)
+        model_input, model_input_right, noisy_copy_length, num_noisy_copies = grab_model_input(self, data)
         noisy_copy_length = torch.tensor(noisy_copy_length)
         
         # Get label
@@ -217,7 +221,7 @@ def read_data(self, idx):
         
     # Build sample
     sample = {'model_input':model_input, 
-              'model_input_flip':model_input_flip,
+              'model_input_right':model_input_right,
               'noisy_copies':noisy_copies, 
               'num_noisy_copies':num_noisy_copies,
               'noisy_copy_length':noisy_copy_length,
@@ -271,12 +275,13 @@ def filter_data(self, data):
 def get_filtered_copies(config, cluster_dict):
     
     # Sample random batch from large clusters
-    if len(cluster_dict['noisy_copies']) > config.max_cluster_unfiltered:
-        cluster_dict['noisy_copies'] = random.sample(cluster_dict['noisy_copies'], config.max_cluster_unfiltered)
+    if len(cluster_dict['noisy_copies']) > config.max_number_per_cluster:
+        cluster_dict['noisy_copies'] = random.sample(cluster_dict['noisy_copies'], config.max_number_per_cluster)
 
     # Create filtered copies list
-    filtered_copies = []
+    filtered_copies = cluster_dict['noisy_copies']
 
+    """
     # Get edit to other cluster members
     edit_cluster = {}
     for i in range(len(cluster_dict['noisy_copies'])):
@@ -292,7 +297,7 @@ def get_filtered_copies(config, cluster_dict):
         # Filter bad copy
         if avg_dist<config.noisy_copy_threshold:
             filtered_copies.append(cluster_dict['noisy_copies'][i]) 
-            
+        """
     return filtered_copies
 
 ###########################################################################################
@@ -360,7 +365,7 @@ def grab_model_input(self, data):
     num_noisy_copies = len(data['noisy_copies'])
      
     model_input      = torch.zeros([self.config.max_number_per_cluster,4,self.config.noisy_copies_length])
-    model_input_flip = torch.zeros([self.config.max_number_per_cluster,4,self.config.noisy_copies_length])
+    model_input_right = torch.zeros([self.config.max_number_per_cluster,4,self.config.noisy_copies_length])
     
     noisy_copy_length = []
     
@@ -376,16 +381,16 @@ def grab_model_input(self, data):
             one_hot_noisy_copy = one_hot_encoding(noisy_copy)
             
             # Get flipped copy
-            one_hot_noisy_copy_flip = torch.flip(one_hot_noisy_copy,dims=[1])
+            one_hot_noisy_copy_right = torch.flip(one_hot_noisy_copy,dims=[1])
             
             # Padding
             if one_hot_noisy_copy.shape[-1] < self.config.noisy_copies_length:
                 
                 model_input[idx,:,:]      = pad_seq(self.config, one_hot_noisy_copy)
-                model_input_flip[idx,:,:] = pad_seq(self.config, one_hot_noisy_copy_flip)
+                model_input_right[idx,:,:] = pad_seq(self.config, one_hot_noisy_copy_right)
 
         else:
             noisy_copy_length.append(0)
         
-    return model_input, model_input_flip, noisy_copy_length, num_noisy_copies
+    return model_input, model_input_right, noisy_copy_length, num_noisy_copies
 

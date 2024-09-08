@@ -1,5 +1,7 @@
-from imports import *
-import utils as utils
+from .imports import *
+from . import utils
+#import utils as utils
+from .loss import loss_function
 
 #####################################################################
 # Set deterministic conditions
@@ -12,7 +14,7 @@ np.random.seed(seed)
 
 #####################################################################
 # Load model
-from model_dnaFormer_siamese import net
+from model_DNAFormer_siamese import net
 
 class config:
 
@@ -69,10 +71,6 @@ class config:
     ce_const_coeff_ce  = 1.0
     ce_const_coeff_const = 0.25
 
-    # Define loss
-    loss = loss_function(config)
-    loss_items = utils.get_loss_items(config)
-
     #####################################################################
     # DNAFormer parameters
     n_head             = 32
@@ -85,6 +83,7 @@ class config:
     enc_filters        = 4
     p_dropout          = 0
     class_token        = 0
+    use_input_scaling  = False
 
     #####################################################################
     # Define training parameters
@@ -97,9 +96,10 @@ class config:
     lrCycles         = 1        # odd number
     batch_size       = 64       # batch size
     nThreads         = 12       # number of threads for data loader to use
-    gpus_list        = [0]   
+    device           = 'cuda' if torch.cuda.is_available() else 'cpu'
     use_pretrained   = False   
 
+    print(device)
     #####################################################################
     # Set paths 
     base_path       = ''
@@ -109,9 +109,14 @@ class config:
 
 #####################################################################
 # Load model
-model = config.net(config)
-model = model.cuda(config.gpus_list[0])
-utils.printNetwork(model)
+model = net(config)
+model = model.to(config.device)
+utils.print_network(model)
+
+#####################################################################
+# Define loss
+config.loss = loss_function(config)
+config.loss_items = utils.get_loss_items(config)
 
 #####################################################################
 # Run training

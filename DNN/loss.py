@@ -1,4 +1,4 @@
-from imports_dna import *
+from .imports import *
 
 class loss_function(nn.Module):  
     def __init__(self,config):

@@ -1,5 +1,5 @@
-from imports import *
-import utils as utils
+from .imports import *
+from . import utils
 
 #####################################################################
 # Set deterministic conditions
@@ -12,7 +12,7 @@ np.random.seed(seed)
 
 #####################################################################
 # Load model
-from model_dnaFormer_siamese import net
+from .model_DNAFormer_siamese import net
 
 class config:
 
@@ -67,34 +67,41 @@ class config:
     activation         = 'gelu'
     num_layers         = 12
     d_model            = 1024
-    alignement_filters = 128
+    alignment_filters  = 128
     dim_feedforward    = 2048
     output_ch          = 4
     enc_filters        = 4
     p_dropout          = 0
     class_token        = 0
+    use_input_scaling  = False
 
     #####################################################################
     # Define training parameters
     train_date       = ''
     model_type       = ''
     frames_per_epoch = {'inf':120_000} 
-    batch_size_inf   = 100      # batch size for inference                               
+    batch_size_inf   = 100      # batch size for inference
     nThreads         = 12       # number of threads for data loader to use
-    gpus_list        = [0]      
+    device           = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+    # Inference time with CPU is very slow. Highly recommended to use a GPU
+    print('Device:', device)
+    if not torch.cuda.is_available():
+            print('Slow inference time, it is recommended to use a GPU')
 
     #####################################################################
     # Set paths 
-    base_path       = ''
-    data_path       = ''
-    data_csv_path   = ''
-    pretrained_path = ''
+    save_path       = './results/'
+    data_path       = './clusters/'
+    pretrained_path = './checkpoints/DNAFormer_siamese.pth'
 
-#####################################################################
-# Load model
-model = config.net(config)
-utils.printNetwork(model)
 
-#####################################################################
-# Run training
-utils.run_inference(config, model)
+def inference_run():
+    #####################################################################
+    # Load model
+    model = net(config)
+    utils.print_network(model)
+
+    #####################################################################
+    # Run training
+    utils.run_inference(config, model)
