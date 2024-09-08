@@ -5,15 +5,15 @@ import math
 import galois
 import numpy as np
 import subprocess
-from gc_maps import dic_13b_to_7q as gc_dict_13_7
-from gc_maps import dic_15b_to_8q as gc_dict_15_8
-from gc_maps import dic_7q_to_13b as reversed_gc_dict_13_7
-from gc_maps import dic_8q_to_15b as reversed_gc_dict_15_8
+from .gc_maps import dic_13b_to_7q as gc_dict_13_7
+from .gc_maps import dic_15b_to_8q as gc_dict_15_8
+from .gc_maps import dic_7q_to_13b as reversed_gc_dict_13_7
+from .gc_maps import dic_8q_to_15b as reversed_gc_dict_15_8
 import os
 from tqdm import tqdm
 import json
-from indices_dic import ind_to_num
-from indices_dic import num_to_ind
+from .indices_dic import ind_to_num
+from .indices_dic import num_to_ind
 import filecmp
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -140,14 +140,17 @@ class decoder:
     # C_2 decoder is compiled and invoked on the phantom syndromes
     def perform_c2_dec(self):
         ## todo: maybe move to the initialization?
-        hfile = open("schifracopy/CommonDefinitions.h", "w")
+        current_script_dir = os.path.dirname(os.path.realpath(__file__))
+        directory = os.path.join(current_script_dir, "schifracopy")
+        file_path = os.path.join(directory, "CommonDefinitions.h")
+        hfile = open(file_path, "w")
         hfile.write("auto constexpr t1 = " + str(int((self.tp_redundancy - self.rs_redundancy) / 2)) + ";\n")
         hfile.write("auto constexpr t2 = " + str(self.rs_redundancy) + ";\n")
         hfile.write("auto constexpr M_orig = " + str(self.number_of_long_rows) + ";\n")
         hfile.close()
-        os.system("g++-7 -ansi -pedantic-errors -Wall -Wextra -Wno-long-long -Wno-unused-variable -O3 -o schifracopy/c2_dvir_dec schifracopy/C2_decoding.cpp -std=c++17 -lm")
+        os.system("g++-7 -ansi -pedantic-errors -Wall -Wextra -Wno-long-long -Wno-unused-variable -O3 -o " +directory+"/c2_dvir_dec " +directory+"/C2_decoding.cpp -std=c++17 -lm")
 
-        subprocess.call(["./schifracopy/c2_dvir_dec"])
+        subprocess.call([directory+"/c2_dvir_dec"])
         return
 
     # this function uses the syndrome dict to compute them after c_2 correction
@@ -319,9 +322,11 @@ class decoder:
 
     # c_1 is performed on the data
     def perform_c1_dec(self):
-        os.system("g++-7 -ansi -pedantic-errors -Wall -Wextra -Wno-long-long -Wno-unused-variable -O3 -o schifracopy/c1_dvir_dec schifracopy/C1_decoding.cpp -std=c++17 -lm")
+        current_script_dir = os.path.dirname(os.path.realpath(__file__))
+        directory = os.path.join(current_script_dir, "schifracopy")
+        os.system("g++-7 -ansi -pedantic-errors -Wall -Wextra -Wno-long-long -Wno-unused-variable -O3 -o "+directory+"/c1_dvir_dec "+directory+"/C1_decoding.cpp -std=c++17 -lm")
 
-        subprocess.call("./schifracopy/c1_dvir_dec")
+        subprocess.call(directory+"/c1_dvir_dec")
         return
 
     # input - decoded data from c_1
@@ -668,7 +673,8 @@ class decoder:
     ## inference from both CPL and DNN
     def get_labels_from_inf_files_with_cpl(self, inf_files_path, confidence_level = 0.35,
                                            confidence_cluster_size=4, file_char={'A', 'C'}, CPL_ON=True):
-
+        print("omer")
+        print(CPL_ON)
         pred_files = [f for f in os.listdir(inf_files_path)]
         pred_files = [f for f in pred_files if f[-6] in file_char]
         pred_files_sort =  sorted(pred_files)
@@ -705,7 +711,9 @@ class decoder:
                         file_name = "./evya"+str(i)+".txt"
                         with open(file_name, 'w') as file:
                             file.writelines(f"{line}\n" for line in inf_data["noisy_copies"])
-                        executable_path = "./CPL_Deep/main " + file_name+ " ./"
+                        current_script_dir = os.path.dirname(os.path.realpath(__file__))
+                        directory = os.path.join(current_script_dir, "CPL_Deep")
+                        executable_path = directory+"/main " + file_name+ " ./"
                         result = subprocess.run(executable_path, shell=True, capture_output=True, text=True)
                         estimation_cpl = str(result.stdout).rstrip()
                         idx = num_to_ind[i]
@@ -939,12 +947,12 @@ def decode(erasure_fraction=0.04, substitution_fraction=0.0075, almost_correct_f
     Dec.perform_c2_dec()
     Dec.get_syndromes_dict(syndrom_table_pkl_path)
     Dec.get_syndromes_dict_after_c2_decoding()
-    Dec.convert_binary_from_c2_decoding()
+    Dec.convert_binary_from_c2_decoding(matrix_numpy_file=h_matrix_path)
     Dec.convert_from_gc_content()
     Dec.convert_data_to_binary_in_format_for_c1_decoding()
     Dec.perform_c1_dec()
     Dec.convert_binary_from_c1_decoding()
-    Dec.convert_binary_from_c1_decoding_data_B()
+    Dec.convert_binary_from_c1_decoding_data_B(matrix_numpy_file=h_matrix_path)
     Dec.convert_result_to_binary(out_put_file_path)
     en = time.time()
     print(en - st)
@@ -987,7 +995,7 @@ def main_decoder(erasure_fraction=0.04, substitution_fraction=0.0075, almost_cor
     ## the syndrome table can be download from here this link, https://www.dropbox.com/s/rml0dbnvhl5kwet/syndromes_dict_identity.pkl?dl=0
     ## another link : https://drive.google.com/file/d/1QgJRKgvm8T2MHrwDhyYFveK0CMIY3C-J/view?usp=sharing
     ## then this path should be replaced.
-    syndrom_table_pkl_path = "./syndromes_dict_identity.pkl"
+    syndrom_table_pkl_path = "/Users/omersabary/Dropbox/for_omer/syndromes_dict_identity.pkl"
 
     if conf_mode == "DNN+Conf+CPL":
         #confidence parameter
