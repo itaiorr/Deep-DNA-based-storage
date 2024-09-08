@@ -19,11 +19,11 @@ This repository includes the methods that were used in the work.
 ## Full End-to-End Retrieval Pipeline
 
 To run the end-to-end retrieval pipeline, please use the script 
-Deep_decoding_pipeline.py  that can be found in the folder DeepDNA-EndocderDecoder_Git/ 
+Deep_decoding_pipeline.py  that can be found in the folder DeepEncoderDecoder/ 
 Please make sure to install the required python packages and to follow the instruction below. 
 
 ```bash
-python3 DeepDNA-EndocderDecoder_Git/deep_decoding_pipeline.py
+python3 deep_decoding_pipeline.py
 ```
 
 The full decoding pipeline includes the following components: 
