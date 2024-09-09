@@ -19,8 +19,12 @@ This repository includes the methods that were used in the work.
 ## Full End-to-End Retrieval Pipeline
 
 To run the end-to-end retrieval pipeline, please use the script 
-Deep_decoding_pipeline.py  that can be found in the folder DeepEncoderDecoder/ 
-Please make sure to install the required python packages and to follow the instruction below. 
+Deep_decoding_pipeline.py  that can be found in this folder.
+
+This three step should be done before running the scripts.
+1. Please install the required Python packages (see below) and follow the instructions in this file (section "Required Python Packages").
+2. Please locate the data (the .fastq files that are obtained from sequencing) in the folder that can be found in: "./DeepEncoderDecoder/data/". This folder currently contains a sample of three .fastq files with 8966 reads.
+4. Please compile the CPL algorithm by running 'make' command in the folder "./DeepEncoderDecoder/CPL_Deep/"  (see instructions below - section "CPL Algorithm"). 
 
 ```bash
 python3 deep_decoding_pipeline.py
@@ -28,15 +32,14 @@ python3 deep_decoding_pipeline.py
 
 The full decoding pipeline includes the following components: 
 1. Preprocessing of the reads—This includes primer trimming and preprocessing of the reads obtained from sequencing. 
-This step trims unnecessary parts of the primers from the reads before passing them through the decoding pipeline. 
-2. Binning algorithm - run on the reads to create the clusters.
+This step trims the unnecessary parts of the primers from the reads before passing them through the decoding pipeline. 
+2. Binning algorithm - this algorithm is performed on the reads to create the clusters.
 This step bins the obtained reads based on the indices, and the binned reads are later used as inputs the DNAformer. 
 3. DNAformer - this step includes creating the inference of the DNAformer, including the margin safety mechanism. 
 In this step DNAformer is used to estimate the encoded sequences from the obtained reads. 
 4. Decoding of the information. 
 This step is used to decode the information from the DNN inference. 
 
-Please compile the CPL algorithm (see instructions below) and to install the required packages. 
 
 
 Full encoding pipeline is given in the script encode.py in Encoder_Decoder folder (as described below). 
@@ -87,7 +90,7 @@ Each cluster of reads appears in the file with a header followed by the reads. M
 
 ```
 
-## Encoder Decoder 
+## Required Python Packages
 
 
 
@@ -104,6 +107,12 @@ pickle
 tqdm 
 json
 os
+torch
+einops
+sklearn
+warnings
+glob
+
 
 ```
 
