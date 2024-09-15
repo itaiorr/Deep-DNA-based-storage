@@ -43,10 +43,9 @@ binner(design_file_path=design_file_path, reads_file_path=reads_trimmed_path)
 
 ## step 3 - creating the DNN inference
 ##
-### inference from itai
 print("Step 3 Inference...")
-#if __name__ == '__main__':
-#    inference_run()
+if __name__ == '__main__':
+    inference_run()
 #exit(0)
 
 ## step 4 Decoding the file from the inference
