@@ -6,7 +6,7 @@ This repository includes the methods that were used in the work.
 ![Example Image](pipeline_(fig1).png)
 
 
-### Link to our datasets: [Should complete link here](google.com). 
+### Link to our datasets will be shared upon request. 
 
 ## The repository includes the following folders. 
 
@@ -16,15 +16,40 @@ This repository includes the methods that were used in the work.
 4. Encoder_Decoder - Implemenation of our encoding and decoding algorithms.  
 5. Data Utilities - Scripts that are used to parse and read our data.
 
+## Required Python Packages
+
+The encoder and decoder are implemented in python 3.8 and requires the following packages. 
+```bash
+
+subprocess
+galois
+os
+math
+random
+numpy
+pickle
+tqdm 
+json
+os
+torch
+einops
+sklearn
+warnings
+glob
+
+
+```
+
 ## Full End-to-End Retrieval Pipeline
 
 To run the end-to-end retrieval pipeline, please use the script 
 Deep_decoding_pipeline.py  that can be found in this folder.
 
 This three step should be done before running the scripts.
-1. Please install the required Python packages (see below) and follow the instructions in this file (section "Required Python Packages").
+1. Please install the required Python packages (see above) and follow the instructions in this file (section "Required Python Packages").
 2. Please locate the data (the .fastq files that are obtained from sequencing) in the folder that can be found in: "./DeepEncoderDecoder/data/". This folder currently contains a sample of three .fastq files with 8966 reads.
-4. Please compile the CPL algorithm by running 'make' command in the folder "./DeepEncoderDecoder/CPL_Deep/"  (see instructions below - section "CPL Algorithm"). 
+3. Please compile the CPL algorithm by running 'make' command in the folder "./DeepEncoderDecoder/CPL_Deep/"  (see instructions below - section "CPL Algorithm").
+4. Download the trained DNN from this link and place it in XXX.
 
 ```bash
 python3 deep_decoding_pipeline.py
@@ -60,7 +85,7 @@ The CPL algorithm is implemented in c++.
 Installation of the g++ compiler is required (see link: https://gcc.gnu.org/). 
 
 
-### Compilation
+### CPL algorithm - Compilation
 
 Compilation is highly recommended by running the makefile command. 
 
@@ -75,7 +100,7 @@ g++ -std=c++0x -O3 -g3 -Wall -c -fmessage-length=0 -o *.cpp g++ -o main *.o
 ```
 
 
-### Usage
+### Running the CPL Algorithm
 To use the algorithm, it is required to bin the reads and formatting them according to the following format:
 
 Each cluster of reads appears in the file with a header followed by the reads. More specifically:
@@ -90,33 +115,7 @@ Each cluster of reads appears in the file with a header followed by the reads. M
 
 ```
 
-## Required Python Packages
-
-
-
-The encoder and decoder are implemented in python 3.8 and requires the following packages. 
-```bash
-
-subprocess
-galois
-os
-math
-random
-numpy
-pickle
-tqdm 
-json
-os
-torch
-einops
-sklearn
-warnings
-glob
-
-
-```
-
-### Usage
+### Encoder/Decoder - Usage
 
 ![image](encoding.png)
 
