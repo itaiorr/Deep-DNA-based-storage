@@ -49,7 +49,7 @@ This three step should be done before running the scripts.
 1. Please install the required Python packages (see above) and follow the instructions in this file (section "Required Python Packages").
 2. Please locate the data (the .fastq files that are obtained from sequencing) in the folder that can be found in: "./DeepEncoderDecoder/data/". This folder currently contains a sample of three .fastq files with 8966 reads.
 3. Please compile the CPL algorithm by running 'make' command in the folder "./DeepEncoderDecoder/CPL_Deep/"  (see instructions below - section "CPL Algorithm").
-4. Download the trained DNN from this link and place it in XXX.
+4. Download the trained DNN from this [link][https://drive.google.com/drive/folders/1y3cJ3bJdRcrzmEpzlKIosl-b8N5NXEWJ?usp=sharing] and place the file DNAFormer_siamese.pth in a folder named checkpoints. Place the folder named checkpoints in the main folder of this repository.
 
 ```bash
 python3 deep_decoding_pipeline.py
