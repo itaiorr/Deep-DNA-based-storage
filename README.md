@@ -1,10 +1,10 @@
-# Deep DNA Storage: Scalable and Robust DNA-based Storage via Coding Theory and Deep Learning 
+# DNAformer allows Scalable and Robust DNA-based Storage via Coding Theory and Deep Learning 
 
 
 This repository includes the methods that were used in the work. 
 
 ![Example Image](pipeline_(fig1).png)
-
+The figure was created with BioRender.com. 
 
 ### Link to our datasets will be shared upon request. 
 
@@ -49,7 +49,7 @@ This three step should be done before running the scripts.
 1. Please install the required Python packages (see above) and follow the instructions in this file (section "Required Python Packages").
 2. Please locate the data (the .fastq files that are obtained from sequencing) in the folder that can be found in: "./DeepEncoderDecoder/data/". This folder currently contains a sample of three .fastq files with 8966 reads.
 3. Please compile the CPL algorithm by running 'make' command in the folder "./DeepEncoderDecoder/CPL_Deep/"  (see instructions below - section "CPL Algorithm").
-4. Download the trained DNN from this [link][https://drive.google.com/drive/folders/1y3cJ3bJdRcrzmEpzlKIosl-b8N5NXEWJ?usp=sharing] and place the file DNAFormer_siamese.pth in a folder named checkpoints. Place the folder named checkpoints in the main folder of this repository.
+4. Download the trained DNN from this [link](https://drive.google.com/drive/folders/1y3cJ3bJdRcrzmEpzlKIosl-b8N5NXEWJ?usp=sharing) and place the file DNAFormer_siamese.pth in a folder named checkpoints. Place the folder named checkpoints in the main folder of this repository.
 
 ```bash
 python3 deep_decoding_pipeline.py
@@ -134,5 +134,5 @@ python3 decode.py
 
 The matrix H that was used throughout our encoding process can be found in H_matrix_identity.py.
 
-The Reed Solomon implementation was done using the schifra library [link](https://www.schifra.com/)
+The Reed Solomon implementation was done using the schifra library [link](https://www.schifra.com/).
 Part of the encoder-decoder was implemented by Dvir Ben-Shabat.
