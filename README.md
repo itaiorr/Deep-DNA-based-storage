@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14266018.svg)](https://doi.org/10.5281/zenodo.14266018)
+
 # DNAformer allows Scalable and Robust DNA-based Storage via Coding Theory and Deep Learning 
 
 
