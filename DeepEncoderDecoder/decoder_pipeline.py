@@ -745,7 +745,7 @@ class decoder:
         f_log.write("erased by cpl/conf: "+ str(new_erasures)+"\n")
         f_log.write("cpl correct:"+str(cpl_correct)+"\n")
         f_log.write("cpl wrong:"+str(cpl_wrong)+"\n")
-
+        '''
         file_sub = open("/Users/omersabary/Desktop/DaniellaDvir/test_finale.nosync/two_files.nosync/data_after_indices_1.txt", "r")
         counter_correct = 0
         counter_wrong = 0
@@ -759,6 +759,7 @@ class decoder:
 
         f_log.write("total_correct "+ str(counter_correct)+"\n")
         f_log.write("total_wrong "+ str(counter_wrong)+"\n")
+        '''
         return
 
     ## New code parallel
